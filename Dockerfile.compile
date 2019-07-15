@@ -1,0 +1,72 @@
+ARG PHP_VERSION="7.1"
+FROM roeldev/php-cli:${PHP_VERSION}-v1 as builder
+
+RUN set -x \
+ # install dependencies
+ && apk update \
+ && apk add \
+    --no-cache \
+        openssl-dev \
+        pcre-dev \
+        zlib-dev \
+        build-base \
+        gpgme
+
+ARG NGINX_VERSION="nginx-1.17.1"
+ADD http://nginx.org/download/${NGINX_VERSION}.tar.gz /tmp/nginx.tar.gz
+ADD http://nginx.org/download/${NGINX_VERSION}.tar.gz.asc /tmp/nginx.tar.gz.asc
+ADD http://nginx.org/keys/mdounin.key /tmp/mdounin.key
+
+WORKDIR /tmp
+RUN set -x \
+ # verify and extract source
+ && gpg=$( gpg --import mdounin.key 2>&1 ) \
+ && key=$( echo $gpg | grep -Eo "gpg: key ([0-9A-F]+)" | head -1 | cut -d' ' -f 3 ) \
+ && echo $gpg \
+ && echo $key \
+ && gpg \
+    --trusted-key "$key" \
+    --verify nginx.tar.gz.asc nginx.tar.gz \
+ && tar x -vz -f nginx.tar.gz -C ./ \
+ && echo "Source extracted to /tmp/${NGINX_VERSION}"
+
+WORKDIR /tmp/${NGINX_VERSION}
+RUN set -x \
+ && ./configure \
+    --with-http_ssl_module \
+    --with-http_v2_module \
+    --with-http_gzip_static_module \
+    --without-http_uwsgi_module \
+    --without-http_scgi_module \
+    --without-http_grpc_module \
+    --without-mail_pop3_module \
+    --without-mail_imap_module \
+    --without-mail_smtp_module \
+    --prefix=/etc/nginx \
+    --http-log-path=/var/log/nginx/access.log \
+    --error-log-path=/var/log/nginx/error.log \
+ && make
+
+# RUN set -x \
+#  && mkdir -p /root-out/ \
+ # && make modules
+ # && make install DESTDIR=/root-out
+
+###############################################################################
+# create actual image
+###############################################################################
+# ARG PHP_VERSION="7.1"
+# FROM roeldev/php-cli:${PHP_VERSION}-v1
+
+# ARG PHP_VERSION
+# RUN set -x \
+#  # install dependencies
+#  && apk add \
+#     --no-cache \
+#         php${PHP_VERSION}-fpm
+
+# COPY --from=builder /root-out/ /
+# COPY rootfs/ /
+
+# RUN set -x \
+#  && ln -s /etc/nginx/sbin/nginx /usr/sbin/nginx
