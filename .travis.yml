@@ -1,0 +1,38 @@
+sudo: required
+dist: xenial
+language: minimal
+
+branches:
+  only:
+    - /^v.*$/
+    - develop
+
+services:
+  - docker
+
+env:
+  global:
+    - MAINTAINER=roeldev
+    - GITHUB_REPO=roeldev/docker-php-nginx
+    - DOCKER_REPO=roeldev/php-nginx
+  matrix:
+    - PHP_VERSION=7.1
+    - PHP_VERSION=7.2
+    - PHP_VERSION=7.3
+    - PHP_VERSION=7.4-rc
+
+before_script:
+  - git clone git://github.com/roeldev/travis-scripts.git
+  - chmod ugo+x travis-scripts/docker-build.sh
+
+script:
+  - travis-scripts/docker-build.sh
+
+before_deploy:
+  - docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
+
+deploy:
+  provider: script
+  script: docker push $DOCKER_REPO
+  on:
+    tags: true

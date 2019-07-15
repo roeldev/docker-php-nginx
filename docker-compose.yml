@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  travis:
+    image: roeldev/php-nginx:${PHP_VERSION}-${IMAGE_TAG}
+    build:
+      context: .
+      args:
+        PHP_VERSION: "${PHP_VERSION}"
+
+  local:
+    image: roeldev/php-nginx:local
+    container_name: php-nginx
+    build:
+      context: .
+      args:
+        PHP_VERSION: "7.1"
