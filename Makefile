@@ -35,7 +35,7 @@ inspect:
 
 .PHONY tag:
 tag:
-	docker tag ${IMAGE_NAME}:local ${IMAGE_NAME}:v1
+	docker tag ${IMAGE_NAME}:local ${IMAGE_NAME}:7.1-v1
 
 .PHONY login:
 login:
