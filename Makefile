@@ -6,9 +6,13 @@ CONTAINER_NAME=php-nginx
 .PHONY it:
 it: build tag start
 
+.PHONY renew:
+renew:
+	docker pull roeldev/php-cli:7.1-v1
+
 .PHONY build:
 build:
-	docker-compose build local
+	docker-compose build --force-rm local
 
 .PHONY start:
 start:
