@@ -15,19 +15,23 @@ RUN set -x \
  # add repository
  && echo "https://nginx.org/packages/mainline/alpine/v$( alpine_version )/main" >> /etc/apk/repositories \
  # install dependencies
+ && apk update \
  && apk add \
     --no-cache \
         php${PHP_VERSION}-fpm \
-        nginx \
- # ensure www-data user and group exists, 82 is the standard uid/gid in Alpine
- && addgroup \
-    -S \
-    -g 82 \
-    www-data \
- && adduser \
-    -D -S \
-    -u 82 \
-    -G www-data \
+        nginx
+
+RUN set -x \
+ # add config rules
+ && echo 'fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;' >> /etc/nginx/fastcgi_params \
+ && echo "include=/etc/php-fpm.d/*.conf" >> /etc/php/${PHP_VERSION}/php-fpm.conf \
+ # add nginx and www-data to abc group, change www-data home dir
+ && usermod --append --groups abc nginx \
+ && usermod \
+    --append \
+    --groups abc \
+    --home /dev/null \
     www-data
 
 COPY rootfs/ /
+EXPOSE 80 443

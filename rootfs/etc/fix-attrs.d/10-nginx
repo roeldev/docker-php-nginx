@@ -1,0 +1,2 @@
+/etc/nginx/nginx.conf   true    root:root 0644 0644
+/etc/nginx/conf.d/      true    root:root 0644 0644

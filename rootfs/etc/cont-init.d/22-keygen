@@ -1,0 +1,28 @@
+#!/usr/bin/with-contenv bash
+
+configFile=/app/config/certs/openssl
+keyFile=/app/config/certs/cert.key
+certFile=/app/config/certs/cert.crt
+
+if [[ ! -f ${configFile} ]]
+then
+    cp /app/resources/default-openssl ${configFile}
+fi
+
+if [[ -f ${keyFile} && -f $certFile ]]
+then
+    echo "Using certificates found in /app/config/certs"
+else
+    echo "Generating self-signed certificates in /app/config/certs, you can replace these with your own if required"
+
+    source ${configFile}
+
+    openssl req \
+        -new \
+        -x509 \
+        -subj "${OPENSSL_SUBJECT}" \
+        -days 3650 \
+        -nodes \
+        -out ${certFile} \
+        -keyout ${keyFile}
+fi

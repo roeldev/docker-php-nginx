@@ -1,1 +1,2 @@
-/var/www/default true www-data:www-data 0755 0755
+/app/public/            true    abc:abc             0750 0750
+/usr/share/nginx/html/  true    www-data:www-data   0750 0740
