@@ -22,11 +22,11 @@ env:
     - PHP_VERSION=7.4-rc
 
 before_script:
-  - git clone git://github.com/roeldev/travis-scripts.git
-  - chmod ugo+x travis-scripts/docker-build.sh
+  - git clone git://github.com/roeldev/travis-ci-scripts.git
+  - chmod ugo+x travis-ci-scripts/docker-build.sh
 
 script:
-  - travis-scripts/docker-build.sh
+  - travis-ci-scripts/docker-build.sh
 
 before_deploy:
   - docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
