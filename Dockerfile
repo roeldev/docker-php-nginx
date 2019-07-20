@@ -1,5 +1,5 @@
-ARG PHP_VERSION="7.1"
-FROM roeldev/php-cli:${PHP_VERSION}-v1
+ARG PHP_TAG="7.1"
+FROM roeldev/php-cli:${PHP_TAG}-v1
 
 ADD https://nginx.org/keys/nginx_signing.rsa.pub /etc/apk/keys/nginx_signing.rsa.pub
 
