@@ -32,7 +32,11 @@ before_deploy:
   - docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
 
 deploy:
-  provider: script
-  script: docker push $DOCKER_REPO
-  on:
-    tags: true
+  - provider: script
+    script: docker push $DOCKER_REPO
+    on:
+      tags: true
+  - provider: script
+    script: docker push $DOCKER_REPO
+    on:
+      all_branches: true
