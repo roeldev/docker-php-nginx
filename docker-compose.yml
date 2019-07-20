@@ -15,6 +15,8 @@ services:
       context: .
       args:
         PHP_VERSION: "7.1"
+    environment:
+      - VERBOSE_INIT=true
     ports:
       - "8080:80"
       - "8443:443"

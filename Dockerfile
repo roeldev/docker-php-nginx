@@ -21,10 +21,20 @@ RUN set -x \
         php${PHP_VERSION}-fpm \
         nginx
 
+COPY rootfs/ /
+
 RUN set -x \
- # add config rules
+ # "disable" nginx default server config, copy default php-fpm configs
+ && mv /etc/nginx/conf.d/default.conf /etc/nginx/sites-enabled/default.conf.disabled \
+ && cp /etc/php/${PHP_VERSION}/php-fpm.conf /etc/php/${PHP_VERSION}/php-fpm.conf.default \
+ && cp /etc/php/${PHP_VERSION}/php-fpm.d/www.conf /etc/php/${PHP_VERSION}/php-fpm.d/www.conf.default \
+ # change default configs
  && echo 'fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;' >> /etc/nginx/fastcgi_params \
- && echo "include=/etc/php-fpm.d/*.conf" >> /etc/php/${PHP_VERSION}/php-fpm.conf \
+ && echo 'include=/app/config/php-fpm/' >> /etc/php/${PHP_VERSION}/php-fpm.conf \
+ && sed -i -E 's/;?daemonize = .+/daemonize = no/g' /etc/php/${PHP_VERSION}/php-fpm.conf \
+ && sed -i -E 's/;?error_log = .+/error_log = \/dev\/stdout/g' /etc/php/${PHP_VERSION}/php-fpm.conf \
+ && sed -i -E 's/;?listen.owner = .+/listen.owner = nginx/g' /etc/php/${PHP_VERSION}/php-fpm.d/www.conf \
+ && sed -i -E 's/;?listen.group = .+/listen.group = nginx/g' /etc/php/${PHP_VERSION}/php-fpm.d/www.conf \
  # add nginx and www-data to abc group, change www-data home dir
  && usermod --append --groups abc nginx \
  && usermod \
@@ -33,5 +43,4 @@ RUN set -x \
     --home /dev/null \
     www-data
 
-COPY rootfs/ /
 EXPOSE 80 443
