@@ -45,7 +45,7 @@ A custom image with PHP and NGINX, based on Alpine Linux with S6 overlay.
 - Docker Hub: https://hub.docker.com/r/roeldev/php-cli
 - PHP.earth packages: https://repos.php.earth/alpine/v3.9/x86_64/
 - Nginx: https://nginx.org
-
+- H5BP nginx configs: https://github.com/h5bp/server-configs-nginx
 
 ## License
 [GPL-3.0+](LICENSE) © 2019 [Roel Schut](https://roelschut.nl)
