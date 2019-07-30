@@ -1,0 +1,35 @@
+[ req ]
+default_bits = 4096
+default_md = sha512
+default_keyfile = key.pem
+prompt = no
+encrypt_key  = no
+# base request
+distinguished_name = req_distinguished_name
+# extensions
+req_extensions = v3_req
+
+# distinguished_name
+[ req_distinguished_name ]
+# C= (required field)
+countryName            = "NL"
+# ST=
+stateOrProvinceName    = "."
+# L=
+localityName           = "."
+# L/postalcode=
+postalCode             = "."
+# L/street=
+streetAddress          = "."
+# O= (required field)
+organizationName       = "roeldev"
+# OU= (required field)
+organizationalUnitName = "roeldev"
+# CN= (required field)
+commonName             = "localhost"
+# CN/emailAddress=
+emailAddress           = "."
+
+# req_extensions
+[ v3_req ]
+subjectAltName = DNS:test.dev,DNS:*.test.dev

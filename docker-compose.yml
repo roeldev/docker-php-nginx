@@ -2,10 +2,11 @@ version: '3.4'
 
 services:
   travis:
-    image: roeldev/php-nginx:${PHP_VERSION}-${IMAGE_TAG}
+    image: roeldev/php-nginx:${PHP_TAG}-${IMAGE_TAG}
     build:
       context: .
       args:
+        PHP_TAG: "${PHP_TAG}"
         PHP_VERSION: "${PHP_VERSION}"
 
   local:
@@ -14,6 +15,7 @@ services:
     build:
       context: .
       args:
+        PHP_TAG: "7.1"
         PHP_VERSION: "7.1"
     environment:
       - VERBOSE_INIT=true
