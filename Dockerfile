@@ -6,7 +6,8 @@ RUN set -x \
  && apk add \
     --no-cache \
         git \
-&& git clone --branch 3.1.0 https://github.com/h5bp/server-configs-nginx.git /tmp/h5bp
+&& git clone --branch 3.1.0 \
+    https://github.com/h5bp/server-configs-nginx.git /tmp/h5bp
 
 WORKDIR /tmp/h5bp/
 RUN set -x \
