@@ -1,9 +1,5 @@
 #!/usr/bin/with-contenv bash
 
-if ${VERBOSE_INIT}
-then
-    echo "Starting php-fpm..."
-fi
-
+echo "Starting php-fpm..."
 exec /usr/sbin/php-fpm -F
 ln -s /run/php-fpm${PHP_VERSION}/php-fpm.sock /run/php/php-fpm.sock
