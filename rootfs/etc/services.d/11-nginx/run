@@ -1,3 +1,8 @@
 #!/usr/bin/with-contenv bash
 
+if ${VERBOSE_INIT}
+then
+    echo Starting nginx...
+fi
+
 exec /usr/sbin/nginx -c /etc/nginx/nginx.conf
