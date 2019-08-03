@@ -3,7 +3,7 @@ IMAGE_NAME=roeldev/php-nginx
 # local.container_name
 CONTAINER_NAME=php-nginx
 # local.build.args.PHP_VERSION
-DEFAULT_PHP_VERSION=7.1
+DEFAULT_PHP_VERSION=7.3
 
 .PHONY it:
 it: build tag start
@@ -41,4 +41,4 @@ login:
 
 .PHONY renew:
 renew:
-	docker pull roeldev/php-cli:${DEFAULT_PHP_VERSION}-v1
+	docker pull roeldev/php-cli:${DEFAULT_PHP_VERSION}-v1.4

@@ -1,4 +1,4 @@
-ARG PHP_TAG="7.1"
+ARG PHP_TAG="7.3"
 FROM roeldev/php-cli:${PHP_TAG}-v1.4 as builder
 
 RUN set -x \
@@ -30,13 +30,13 @@ RUN set -x \
 ###############################################################################
 # create actual image
 ###############################################################################
-ARG PHP_TAG="7.1"
+ARG PHP_TAG="7.3"
 FROM roeldev/php-cli:${PHP_TAG}-v1.4
 
 ADD https://nginx.org/keys/nginx_signing.rsa.pub /etc/apk/keys/nginx_signing.rsa.pub
 
-ARG PHP_VERSION="7.1"
-ARG NGINX_VERSION="1.17.1"
+ARG PHP_VERSION="7.3"
+ARG NGINX_VERSION="1.17.2"
 
 RUN set -x \
  # verify repository key
