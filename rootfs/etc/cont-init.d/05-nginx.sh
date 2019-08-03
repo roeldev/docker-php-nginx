@@ -25,6 +25,5 @@ else
 
     cp \
         --archive \
-        $( if ${VERBOSE_INIT:-false}; then echo '--verbose'; fi ) \
         /etc/nginx/sites-default/. /etc/nginx/conf.d
 fi
