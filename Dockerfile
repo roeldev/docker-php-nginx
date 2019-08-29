@@ -51,6 +51,7 @@ RUN set -x \
  && apk add \
     --no-cache \
         php${PHP_VERSION}-fpm \
+        php${PHP_VERSION}-session \
         nginx
 
 RUN set -x \
