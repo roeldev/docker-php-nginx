@@ -88,8 +88,8 @@ RUN set -x \
  && echo 'fastcgi_param  DOCUMENT_ROOT $realpath_root;' >> /etc/nginx/fastcgi_params \
  # add symlinks for certificates to nginx
  && mkdir -p /etc/nginx/certs/ \
- && ln -s /app/config/certs/default.crt /etc/nginx/certs/default.crt \
- && ln -s /app/config/certs/default.key /etc/nginx/certs/default.key
+ && ln -s /config/certs/default.crt /etc/nginx/certs/default.crt \
+ && ln -s /config/certs/default.key /etc/nginx/certs/default.key
 
 COPY rootfs/ /
 
