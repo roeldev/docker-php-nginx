@@ -1,5 +1,5 @@
 ARG PHP_TAG="7.3"
-FROM roeldev/php-cli:${PHP_TAG}-v1.5 as builder
+FROM roeldev/php-cli:${PHP_TAG}-v1.6 as builder
 
 RUN set -x \
  && apk update \
@@ -31,7 +31,7 @@ RUN set -x \
 # create actual image
 ###############################################################################
 ARG PHP_TAG="7.3"
-FROM roeldev/php-cli:${PHP_TAG}-v1.5
+FROM roeldev/php-cli:${PHP_TAG}-v1.6
 
 ADD https://nginx.org/keys/nginx_signing.rsa.pub /etc/apk/keys/nginx_signing.rsa.pub
 
@@ -51,6 +51,7 @@ RUN set -x \
  && apk add \
     --no-cache \
         php${PHP_VERSION}-fpm \
+        php${PHP_VERSION}-session \
         nginx
 
 RUN set -x \
