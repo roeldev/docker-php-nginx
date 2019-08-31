@@ -1,16 +1,16 @@
 #!/usr/bin/with-contenv bash
 
-keyFile=/app/config/certs/default.key
-csrFile=/app/config/certs/default.csr
-crtFile=/app/config/certs/default.crt
-configFile=/app/config/certs/openssl.cnf
+keyFile=/config/certs/default.key
+csrFile=/config/certs/default.csr
+crtFile=/config/certs/default.crt
+configFile=/config/certs/openssl.cnf
 
 if [[ -f ${keyFile} && -f $csrFile ]]
 then
-    echo "Using certificates found in /app/config/certs/"
+    echo "Using certificates found in /config/certs/"
 else
     echo
-    echo "Generating self-signed certificates in /app/config/certs/,"
+    echo "Generating self-signed certificates in /config/certs/,"
     echo "you can replace these with your own if required"
     echo
 
