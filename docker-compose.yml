@@ -23,4 +23,4 @@ services:
       - "8080:80"
       - "8443:443"
     volumes:
-      - "./.docker-volumes/config:/app/config"
+      - "./.docker-volumes/config:/config"
